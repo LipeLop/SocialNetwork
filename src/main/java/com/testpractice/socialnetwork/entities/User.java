@@ -1,4 +1,4 @@
-package com.testpractice.socialnetwork;
+package com.testpractice.socialnetwork.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -13,17 +13,17 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUser", nullable = false)
+    @Column(name = "id_user", nullable = false)
     private Integer id;
 
-    @Size(max = 45)
+    @Size(max = 60)
     @NotNull
-    @Column(name = "Login", nullable = false, length = 45, unique = true)
+    @Column(name = "Login", nullable = false, length = 60)
     private String login;
 
-    @Size(max = 45)
+    @Size(max = 60)
     @NotNull
-    @Column(name = "Password", nullable = false, length = 45)
+    @Column(name = "Password", nullable = false, length = 60)
     private String password;
 
 }

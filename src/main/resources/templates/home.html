@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>home</title>
 </head>
 <body>
+<form th:object="${user}">
+    <h2 th:text="${user.id}"></h2>
+    <h2 th:text="${user.getLogin()}"> </h2>
 
+</form>
 </body>
 </html>

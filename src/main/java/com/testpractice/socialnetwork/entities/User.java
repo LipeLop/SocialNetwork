@@ -6,14 +6,17 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Integer id;
 
     @Size(max = 60)
@@ -25,5 +28,7 @@ public class User {
     @NotNull
     @Column(name = "Password", nullable = false, length = 60)
     private String password;
+
+
 
 }

@@ -30,5 +30,9 @@ public class User {
     private String password;
 
 
+    @Size(max = 45)
+    @NotNull
+    @Column(name = "Name", nullable = false, length = 45)
+    private String username;
 
 }

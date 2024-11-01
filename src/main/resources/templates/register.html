@@ -6,7 +6,7 @@
 <body>
 <h1>Регистрация</h1>
 <form th:action="@{/register}" th:object="${user}" method="post">
-    <label >Имя пользователя:</label>
+    <label >Логин:</label>
     <label>
         <input type="text" th:field="*{login}" required>
     </label>
@@ -14,6 +14,11 @@
     <label>Пароль:</label>
     <label>
         <input type="password" th:field="*{password}" required>
+    </label>
+    <br>
+    <label>Никнейм:</label>
+    <label>
+        <input type="text" th:field="*{name}" required>
     </label>
     <br>
     <button type="submit">Зарегистрироваться</button>

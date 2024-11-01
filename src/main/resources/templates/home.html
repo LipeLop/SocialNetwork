@@ -1,15 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>home</title>
+    <title>Home</title>
 </head>
 <body>
-<form th:object="${user}">
-    <h2 th:text="${user.id}"></h2>
-    <h2 th:text="${user.getLogin()}"> </h2>
+<h2 th:text="'Привет, ' + ${user.username} + '!'"></h2>
 
+<form th:action="@{/search}" method="get">
+    <label>
+        <input type="text" name="name" placeholder="Введите имя" required />
+    </label>
+    <button type="submit">Поиск</button>
 </form>
+
+<div th:object="${searchResults}">
+    <h3>Результаты поиска:</h3>
+    <ul>
+        <li th:each="result : ${searchResults}">
+            <span th:text="${result.username}"></span>
+            <form th:action="@{/addFriend}" method="post" style="display:inline;">
+                <input type="hidden" name="userId" th:value="${result.id}" />
+                <button type="submit">Добавить в друзья</button>
+            </form>
+        </li>
+    </ul>
+    <h3>Друзья:</h3>
+    <ul>
+        <li th:each="friend : ${friends}">
+            <span th:text="${friend.username}"></span>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

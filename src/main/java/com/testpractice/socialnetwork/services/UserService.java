@@ -44,7 +44,10 @@ public class UserService implements UserDetailsService {
     public List<User> findAllExceptMe(String login) {
         return userRepository.findAllByLoginNot(login);
     }
-    public List<User> findAllByNameExceptMe(String Search_login, String myLogin) {
-        return userRepository.findAllByLoginContainsAndLoginNot(Search_login, myLogin);
+    public List<User> findAllByNameExceptMe(String username, String login) {
+        return userRepository.findAllByUsernameContainsAndLoginNot(username, login);
+    }
+    public User findById(int id) {
+        return userRepository.findById(id);
     }
 }

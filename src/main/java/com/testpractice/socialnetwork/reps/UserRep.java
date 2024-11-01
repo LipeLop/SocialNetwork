@@ -9,5 +9,6 @@ public interface UserRep extends JpaRepository<User, Integer> {
 
     User findByLogin(String login);
     List<User> findAllByLoginNot(String login);
-    List<User> findAllByLoginContainsAndLoginNot(String Search_login, String myLogin);
+    List<User> findAllByUsernameContainsAndLoginNot(String username, String login);
+    User findById(int id);
 }

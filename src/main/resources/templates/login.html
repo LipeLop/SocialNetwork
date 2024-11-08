@@ -19,8 +19,8 @@
     <button>
         <a th:href="@{/register}" class="button">Зарегистрироваться</a>
     </button>
-    <div th:if="${error}" style="color: red;">
-        <p th:text="${error}"></p>
+    <div th:if="${error}">
+        Unable to login. Check your username and password.
     </div>
 </form>
 </body>

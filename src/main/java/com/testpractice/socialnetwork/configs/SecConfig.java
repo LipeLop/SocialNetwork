@@ -1,6 +1,8 @@
 package com.testpractice.socialnetwork.configs;
 
 
+import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.reps.UserRep;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -38,8 +42,15 @@ public class SecConfig {
 
         return http.build();
     }
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth, UserService userService) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
+
+    @Bean
+    public UserDetailsService userServicewow(UserRep userRep) {
+        return username -> {
+            User user = userRep.findByLogin(username);
+            if (user != null) return user;
+            throw new UsernameNotFoundException("User not found");
+        };
+
     }
+
 }

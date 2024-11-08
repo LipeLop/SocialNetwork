@@ -5,7 +5,7 @@
     <title>Home</title>
 </head>
 <body>
-<h2 th:text="'Привет, ' + ${user.username} + '!'"></h2>
+<h2 th:text="'Привет, ' + ${user.nickname} + '!'"></h2>
 
 <form th:action="@{/search}" method="get">
     <label>
@@ -18,7 +18,7 @@
     <h3>Результаты поиска:</h3>
     <ul>
         <li th:each="result : ${searchResults}">
-            <span th:text="${result.username}"></span>
+            <span th:text="${result.nickname}"></span>
             <form th:action="@{/addFriend}" method="post" style="display:inline;">
                 <input type="hidden" name="userId" th:value="${result.id}" />
                 <button type="submit">Добавить в друзья</button>
@@ -28,7 +28,15 @@
     <h3>Друзья:</h3>
     <ul>
         <li th:each="friend : ${friends}">
-            <span th:text="${friend.username}"></span>
+            <span th:text="${friend.nickname}"></span>
+            <form th:action="@{/message}" method="post" style="display:inline;">
+                <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" name="userId" th:value="${friend.id}" />
+                <label>
+                    <textarea name="content" placeholder="Введите ваше сообщение" required></textarea>
+                </label>
+                <button type="submit">Отправить сообщение</button>
+            </form>
         </li>
     </ul>
 </div>

@@ -5,7 +5,6 @@ import com.testpractice.socialnetwork.services.FriendShipService;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,29 +21,29 @@ public class MainController {
     @Autowired
     FriendShipService friendShipService;
 
+    @ModelAttribute(name = "friends")
+    public List<User> getFriends(@ModelAttribute(name = "user") User user) {
+        return friendShipService.getFriends(user);
+    }
+
     @ModelAttribute(name = "user")
     public User user(Principal principal) throws Exception {
+        System.out.println(  principal);
         return userService.findByLogin(principal.getName());
+    }
 
-    }
+
     @ModelAttribute(name = "searchResults")
-    public List<User> getUsers(Principal principal) {
-        return userService.findAllExceptMe(principal.getName());
+    public List<User> getUsers(@ModelAttribute(name = "friends") List<User> friends,
+                               @ModelAttribute(name = "user") User user) {
+        List<User> users = new ArrayList<>(friends);
+        users.add(user);
+        return userService.findUsersNotInFriendsListAndNotMe(users);
     }
-    @ModelAttribute(name = "friends")
-    public List<User> getFriends(Principal principal) {
-        List<User> friends = new ArrayList<>();
-        return friends;
-    }
+
 
     @GetMapping("/home")
     public String showMainPage() {
-        return "home";
-    }
-    @GetMapping("/search")
-    public String search(@RequestParam String name, @ModelAttribute(name = "user") User user, Model model) {
-        List<User> searchResults = userService.findAllByNameExceptMe(name, user.getLogin());
-        model.addAttribute("searchResults", searchResults);
         return "home";
     }
     @PostMapping("/addFriend")

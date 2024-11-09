@@ -5,6 +5,7 @@ import com.testpractice.socialnetwork.entities.Message;
 import com.testpractice.socialnetwork.entities.User;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -30,9 +31,9 @@ public class ChatController {
     }
 
 
-    @MessageMapping("/sendMessage")
-    public void sendMessage(@Payload Message message) {
-        messagingTemplate.convertAndSend("/user/" + 14 + "/queue/reply", message);
+    @MessageMapping("/sendMessage/{chatId}")
+    public void sendMessage(@DestinationVariable String chatId, @Payload Message message) {
+        messagingTemplate.convertAndSend("/user/" + chatId + "/queue/reply", message);
     }
 
     @GetMapping("/messager")

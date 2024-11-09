@@ -5,7 +5,7 @@
     <title>Home</title>
 </head>
 <body>
-<h2 th:text="'Привет, ' + ${user.nickname} + '!'"></h2>
+<h2 th:text="'Привет, ' + ${currentUser.nickname} + '!'"></h2>
 
 <form th:action="@{/search}" method="get">
     <label>
@@ -29,12 +29,8 @@
     <ul>
         <li th:each="friend : ${friends}">
             <span th:text="${friend.nickname}"></span>
-            <form th:action="@{/message}" method="post" style="display:inline;">
-                <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <input type="hidden" name="userId" th:value="${friend.id}" />
-                <label>
-                    <textarea name="content" placeholder="Введите ваше сообщение" required></textarea>
-                </label>
+            <form th:action="@{/messager}" method="get" style="display:inline;">
+                <input type="hidden" name="receiverId" th:value="${friend.id}" />
                 <button type="submit">Отправить сообщение</button>
             </form>
         </li>

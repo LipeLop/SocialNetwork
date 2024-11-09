@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <!-- Подключаем внешний JS файл -->
+    <script src="wow.js" defer></script> <!-- Замените на путь, где находится ваш chat.js -->
+</head>
+<body>
+<h2>Chat</h2>
+
+<!-- Форма для ввода сообщения -->
+<div>
+    <input type="text" id="message" placeholder="Enter your message"/>
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<!-- Скрытые поля для хранения данных о пользователе -->
+<input type="hidden" id="currentUserId" th:value="${currentUser}"/> <!-- Пример ID текущего пользователя -->
+<input type="hidden" id="receiverId" th:value="${receiver}"/> <!-- Пример ID получателя -->
+
+<!-- Раздел для чата -->
+<div id="chat"></div>
+
+</body>
+</html>

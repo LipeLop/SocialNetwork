@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -44,5 +45,9 @@ public class UserService {
         List<String> logins = friendsList.stream().map(User::getLogin).toList();
         return userRepository.findAllByLoginNotIn(logins);
 
+    }
+
+    public User getUserById(int receiverId) {
+        return userRepository.findById(receiverId);
     }
 }

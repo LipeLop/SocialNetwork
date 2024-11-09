@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/search")
-@SessionAttributes({"user", "friends"})
+@SessionAttributes({"currentUser", "friends"})
 public class SeacrhController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class SeacrhController {
 
     @GetMapping()
     public String search(@RequestParam String name,
-                         @ModelAttribute(name = "user") User user,
+                         @ModelAttribute(name = "currentUser") User user,
                          @ModelAttribute(name = "friends") List<User> friends,
                          Model model) {
         List<User> users = new ArrayList<>(friends);

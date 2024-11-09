@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"user", "friends"})
+@SessionAttributes({"currentUser", "friends"})
 public class MainController {
 
     @Autowired
@@ -22,11 +22,11 @@ public class MainController {
     FriendShipService friendShipService;
 
     @ModelAttribute(name = "friends")
-    public List<User> getFriends(@ModelAttribute(name = "user") User user) {
+    public List<User> getFriends(@ModelAttribute(name = "currentUser") User user) {
         return friendShipService.getFriends(user);
     }
 
-    @ModelAttribute(name = "user")
+    @ModelAttribute(name = "currentUser")
     public User user(Principal principal) throws Exception {
         System.out.println(  principal);
         return userService.findByLogin(principal.getName());
@@ -35,7 +35,7 @@ public class MainController {
 
     @ModelAttribute(name = "searchResults")
     public List<User> getUsers(@ModelAttribute(name = "friends") List<User> friends,
-                               @ModelAttribute(name = "user") User user) {
+                               @ModelAttribute(name = "currentUser") User user) {
         List<User> users = new ArrayList<>(friends);
         users.add(user);
         return userService.findUsersNotInFriendsListAndNotMe(users);
@@ -48,7 +48,7 @@ public class MainController {
     }
     @PostMapping("/addFriend")
     public String addFriend(@RequestParam Integer userId,
-                            @ModelAttribute(name = "user") User user,
+                            @ModelAttribute(name = "currentUser") User user,
                             @ModelAttribute(name = "friends") List<User> friends,
                             @ModelAttribute(name = "searchResults") List<User> searchResults) {
         User friend = userService.findById(userId);

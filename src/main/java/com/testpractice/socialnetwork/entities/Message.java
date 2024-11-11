@@ -6,10 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Message {
-    private String sender;
-    private String receiver;  // ID получателя
+    private UserDTO  sender;
+    private UserDTO  receiver;
     private String content;
-
-
 }
 

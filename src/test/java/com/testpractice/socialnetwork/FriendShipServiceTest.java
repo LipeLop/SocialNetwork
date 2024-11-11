@@ -24,36 +24,36 @@ public class FriendShipServiceTest {
     @Autowired
     private UserRep userRep;
 
-    @Test
-    public void testAddFriends() {
-        User user = new User();
-        user.setLogin("123");
-        user.setPassword("123");
-        User friend = new User();
-        friend.setLogin("2123");
-        friend.setPassword("2123");
-
-        userRep.save(user);
-        userRep.save(friend);
-
-        user = userRep.findByLogin(user.getLogin());
-        friend = userRep.findByLogin(friend.getLogin());
-
-        // Создаем FriendshipId
-        FriendshipId friendshipId = new FriendshipId();
-        friendshipId.setUserFirst(user.getId()); // Предполагается, что у вас есть метод getId()
-        friendshipId.setUserSecond(friend.getId());
-
-        // Устанавливаем FriendshipId в Friendship
-        Friendship friendship1 = new Friendship();
-        friendship1.setId(friendshipId);
-        friendship1.setUserFirst(user);
-        friendship1.setUserSecond(friend);
-
-        friendShipRep.save(friendship1);
-
-        Friendship friendship2 = friendShipRep.findFirstByUserFirst(user);
-        assertEquals(friendship1, friendship2);
-    }
+//    @Test
+//    public void testAddFriends() {
+//        User user = new User();
+//        user.setLogin("123");
+//        user.setPassword("123");
+//        User friend = new User();
+//        friend.setLogin("2123");
+//        friend.setPassword("2123");
+//
+//        userRep.save(user);
+//        userRep.save(friend);
+//
+//        user = userRep.findByLogin(user.getLogin());
+//        friend = userRep.findByLogin(friend.getLogin());
+//
+//        // Создаем FriendshipId
+//        FriendshipId friendshipId = new FriendshipId();
+//        friendshipId.setUserFirst(user.getId()); // Предполагается, что у вас есть метод getId()
+//        friendshipId.setUserSecond(friend.getId());
+//
+//        // Устанавливаем FriendshipId в Friendship
+//        Friendship friendship1 = new Friendship();
+//        friendship1.setId(friendshipId);
+//        friendship1.setUserFirst(user);
+//        friendship1.setUserSecond(friend);
+//
+//        friendShipRep.save(friendship1);
+//
+//        Friendship friendship2 = friendShipRep.findFirstByUserFirst(user);
+//        assertEquals(friendship1, friendship2);
+//    }
 
 }

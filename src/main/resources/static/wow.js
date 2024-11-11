@@ -1,8 +1,12 @@
 
 var socket = new SockJS('/chat');
 var stompClient = Stomp.over(socket);
-var currentUserId = document.getElementById("currentUserId").value;
-var receiverId = document.getElementById("receiverId").value;
+var currentUserJson = document.getElementById("currentUser").value;
+var receiverJson = document.getElementById("receiver").value;
+var currentUser = JSON.parse(currentUserJson);
+var receiver = JSON.parse(receiverJson);
+var currentUserId = currentUser.id;
+var receiverId = receiver.id;
 var chatId = generateChatId(currentUserId, receiverId);
 
 
@@ -18,13 +22,12 @@ stompClient.connect({}, function(frame) {
         var chatDiv = document.getElementById("chat");
         var newMessage = document.createElement("div");
 
-        if (message.sender === currentUserId) {
+        if (message.sender.id === currentUserId) {
             newMessage.classList.add("sender-message");
         } else {
             newMessage.classList.add("receiver-message");
         }
-
-        newMessage.innerHTML = "<strong>" + message.sender + ": </strong>" + message.content;
+        newMessage.innerHTML = "<strong>" + message.sender.nickname + ": </strong>" + message.content;
         chatDiv.appendChild(newMessage);
     });
 });
@@ -33,10 +36,9 @@ stompClient.connect({}, function(frame) {
 
 function sendMessage() {
     var messageContent = document.getElementById("message").value;
-
     var message = {
-        sender: currentUserId,
-        receiver: receiverId,
+        sender: currentUser,
+        receiver: receiver,
         content: messageContent
     };
 

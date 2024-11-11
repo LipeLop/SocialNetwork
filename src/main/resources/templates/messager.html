@@ -13,17 +13,21 @@
 <body>
 <h2>Chat</h2>
 <link rel="stylesheet" href="wow.css">
+
+
+<input type="hidden" id="currentUser" th:value="${JSONcurrentUser}"/>
+<input type="hidden" id="receiver" th:value="${JSONreceiver}"/>
+
+
+<div id="chat"></div>
 <div>
     <input type="text" id="message" placeholder="Enter your message"/>
     <button onclick="sendMessage()">Send</button>
+    <button>
+        <a th:href="@{/}" class="button">Домой</a>
+    </button>
+
 </div>
-
-<!-- Скрытые поля для хранения данных о пользователе -->
-<input type="hidden" id="currentUserId" th:value="${currentUser}"/> <!-- Пример ID текущего пользователя -->
-<input type="hidden" id="receiverId" th:value="${receiver}"/> <!-- Пример ID получателя -->
-
-<!-- Раздел для чата -->
-<div id="chat"></div>
 
 </body>
 </html>

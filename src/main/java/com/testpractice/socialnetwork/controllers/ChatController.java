@@ -1,8 +1,11 @@
 package com.testpractice.socialnetwork.controllers;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testpractice.socialnetwork.entities.Message;
 import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.UserDTO;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -21,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 public class ChatController {
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     private final SimpMessagingTemplate messagingTemplate;
 
     @Autowired
@@ -37,16 +43,17 @@ public class ChatController {
     }
 
     @GetMapping("/messager")
-    public String chat(@RequestParam("receiverId") String receiverId,
+    public String chat(@RequestParam("receiverId") int receiverId,
                        @ModelAttribute(name = "currentUser") User user,
-                       Model model) {
-        User receiver = userService.getUserById(Integer.parseInt(receiverId));
-
-        model.addAttribute("currentUser", String.valueOf(user.getId()));
-        model.addAttribute("receiver", String.valueOf(receiver.getId()));
-
+                       Model model) throws JsonProcessingException {
+        User receiver = userService.getUserById(receiverId);
+        UserDTO currentUserDTO = new UserDTO(user.getId(), user.getNickname());
+        UserDTO receiverDTO = new UserDTO(receiver.getId(), receiver.getNickname());
+        String currentUserJson = objectMapper.writeValueAsString(currentUserDTO);
+        String receiverJson = objectMapper.writeValueAsString(receiverDTO);
+        model.addAttribute("JSONcurrentUser", currentUserJson);
+        model.addAttribute("JSONreceiver", receiverJson);
         return "messager";  // Страница чата, где можно отправить сообщение
     }
-
 }
 

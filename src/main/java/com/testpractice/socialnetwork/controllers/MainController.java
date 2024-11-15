@@ -4,6 +4,8 @@ import com.testpractice.socialnetwork.entities.User;
 import com.testpractice.socialnetwork.services.FriendShipService;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +29,8 @@ public class MainController {
     }
 
     @ModelAttribute(name = "currentUser")
-    public User user(Principal principal) throws Exception {
-        System.out.println(  principal);
-        return userService.findByLogin(principal.getName());
+    public User user(@AuthenticationPrincipal User user) throws Exception {
+        return user;
     }
 
 

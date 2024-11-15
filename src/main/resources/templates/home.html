@@ -30,7 +30,8 @@
         <li th:each="friend : ${friends}">
             <span th:text="${friend.nickname}"></span>
             <form th:action="@{/messager}" method="get" style="display:inline;">
-                <input type="hidden" name="receiverId" th:value="${friend.id}" />
+                <input type="hidden" name="friendId" th:value="${friend.id}" />
+                <input type="hidden" name="friendNickname" th:value="${friend.nickname}" />
                 <button type="submit">Отправить сообщение</button>
             </form>
         </li>

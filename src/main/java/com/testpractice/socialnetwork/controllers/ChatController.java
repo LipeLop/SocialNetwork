@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@SessionAttributes("currentUser")
+
 public class ChatController {
 
     @Autowired
@@ -43,17 +43,17 @@ public class ChatController {
     }
 
     @GetMapping("/messager")
-    public String chat(@RequestParam("receiverId") int receiverId,
-                       @ModelAttribute(name = "currentUser") User user,
+    public String chat(@RequestParam("friendId") int friendId,
+                       @RequestParam("friendNickname") String friendNickname,
+                       @SessionAttribute(name = "currentUser") User user,
                        Model model) throws JsonProcessingException {
-        User receiver = userService.getUserById(receiverId);
         UserDTO currentUserDTO = new UserDTO(user.getId(), user.getNickname());
-        UserDTO receiverDTO = new UserDTO(receiver.getId(), receiver.getNickname());
+        UserDTO receiverDTO = new UserDTO(friendId, friendNickname);
         String currentUserJson = objectMapper.writeValueAsString(currentUserDTO);
         String receiverJson = objectMapper.writeValueAsString(receiverDTO);
         model.addAttribute("JSONcurrentUser", currentUserJson);
         model.addAttribute("JSONreceiver", receiverJson);
-        return "messager";  // Страница чата, где можно отправить сообщение
+        return "messager";
     }
 }
 

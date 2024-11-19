@@ -37,9 +37,13 @@ public class ChatController {
     }
 
 
-    @MessageMapping("/sendMessage")
-    public void sendMessage(@Payload Message message) {
-        messagingTemplate.convertAndSend("/user/" + message.getChat_id() + "/queue/reply", message);
+
+    @MessageMapping("/sendMessage/{chatId}")
+    public void sendMessage(@DestinationVariable String chatId, @Payload Message message) {
+        messagingTemplate.convertAndSend("/user/" + chatId + "/queue/reply", message);
+        String notificationMessage = message.getSender().getNickname();
+        messagingTemplate.convertAndSend("/user/" + message.getReceiver().getId() + "/queue/notifications", notificationMessage);
+
     }
 
     @GetMapping("/messager")

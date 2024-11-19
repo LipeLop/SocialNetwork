@@ -14,9 +14,6 @@ stompClient.connect({}, function(frame) {
     console.log('Connected: ' + frame);
 
 
-
-
-
     stompClient.subscribe('/user/' + chatId + '/queue/reply', function(messageOutput) {
         var message = JSON.parse(messageOutput.body);
         var chatDiv = document.getElementById("chat");

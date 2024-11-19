@@ -35,12 +35,12 @@ function sendMessage() {
     var messageContent = document.getElementById("message").value;
     var message = {
         sender: currentUser,
-        chat_id: chatId,
+        receiver: receiver,
         content: messageContent
     };
 
 
-    stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
+    stompClient.send("/app/sendMessage/" + chatId, {}, JSON.stringify(message));
 
 
     document.getElementById("message").value = '';

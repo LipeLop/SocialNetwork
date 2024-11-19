@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Message {
     private UserDTO  sender;
-    private String  chat_id;
+    private UserDTO  receiver;
     private String content;
 }
 

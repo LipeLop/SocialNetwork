@@ -7,6 +7,7 @@
 <body>
 <h2 th:text="'Привет, ' + ${currentUser.nickname} + '!'"></h2>
 
+<!-- Форма поиска -->
 <form th:action="@{/search}" method="get">
     <label>
         <input type="text" name="name" placeholder="Введите имя" required />
@@ -14,6 +15,7 @@
     <button type="submit">Поиск</button>
 </form>
 
+<!-- Список результатов поиска и друзей -->
 <div th:object="${searchResults}">
     <h3>Результаты поиска:</h3>
     <ul>
@@ -25,6 +27,7 @@
             </form>
         </li>
     </ul>
+
     <h3>Друзья:</h3>
     <ul>
         <li th:each="friend : ${friends}">
@@ -37,5 +40,57 @@
         </li>
     </ul>
 </div>
+
+<!-- Скрипт для подписки на уведомления -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.0/stomp.min.js"></script>
+<script>
+    var socket = new SockJS('/chat'); // Подключение к WebSocket
+    var stompClient = Stomp.over(socket);
+
+    var currentUserId = 14;
+
+    stompClient.connect({}, function(frame) {
+        console.log('Connected: ' + frame);
+
+        // Подписка на уведомления для текущего пользователя
+        stompClient.subscribe('/user/' + currentUserId + '/queue/notifications', function(notification) {
+            var notificationMessage = notification.body;
+            displayNotification(notificationMessage);
+        });
+    });
+
+    // Функция для отображения уведомлений
+    function displayNotification(message) {
+        // Создаем элемент уведомления
+        var notificationDiv = document.createElement("div");
+        notificationDiv.classList.add("notification");
+        notificationDiv.innerHTML = message;
+
+        // Добавляем уведомление на страницу
+        document.body.appendChild(notificationDiv);
+
+        // Удаляем уведомление через 5 секунд
+        setTimeout(function() {
+            notificationDiv.remove();
+        }, 5000);
+    }
+
+</script>
+
+<style>
+    /* Стиль для уведомлений */
+    .notification {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
 </body>
 </html>

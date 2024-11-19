@@ -14,9 +14,6 @@ stompClient.connect({}, function(frame) {
     console.log('Connected: ' + frame);
 
 
-
-
-
     stompClient.subscribe('/user/' + chatId + '/queue/reply', function(messageOutput) {
         var message = JSON.parse(messageOutput.body);
         var chatDiv = document.getElementById("chat");
@@ -38,12 +35,12 @@ function sendMessage() {
     var messageContent = document.getElementById("message").value;
     var message = {
         sender: currentUser,
-        receiver: receiver,
+        chat_id: chatId,
         content: messageContent
     };
 
 
-    stompClient.send("/app/sendMessage/" + chatId, {}, JSON.stringify(message));
+    stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
 
 
     document.getElementById("message").value = '';

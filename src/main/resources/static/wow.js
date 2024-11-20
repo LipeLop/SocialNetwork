@@ -1,10 +1,8 @@
 
 var socket = new SockJS('/chat');
 var stompClient = Stomp.over(socket);
-var currentUserJson = document.getElementById("currentUser").value;
-var receiverJson = document.getElementById("receiver").value;
-var currentUser = JSON.parse(currentUserJson);
-var receiver = JSON.parse(receiverJson);
+var currentUser = [[${#objects.toJson(currentUser)}]];
+var receiver = [[${#objects.toJson(friendDTO)}]];
 var currentUserId = currentUser.id;
 var receiverId = receiver.id;
 var chatId = generateChatId(currentUserId, receiverId);

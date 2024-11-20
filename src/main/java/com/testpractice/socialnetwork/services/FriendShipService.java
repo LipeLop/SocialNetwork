@@ -1,8 +1,10 @@
 package com.testpractice.socialnetwork.services;
 
+import com.testpractice.socialnetwork.dtos.UserDto;
 import com.testpractice.socialnetwork.entities.Friendship;
 import com.testpractice.socialnetwork.entities.FriendshipId;
 import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.mappers.UserMapper;
 import com.testpractice.socialnetwork.reps.FriendShipRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,14 @@ import java.util.List;
 public class FriendShipService {
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private FriendShipRep friendShipRep;
 
-    public void addFriends(User user1, User user2) {
+    public void addFriends(UserDto user_first, UserDto user_second) {
+        User user1 = userMapper.fromUserDto(user_first);
+        User user2 = userMapper.fromUserDto(user_second);
         Friendship friendship = new Friendship(user1, user2);
         FriendshipId friendshipId = new FriendshipId();
         friendship.setId(friendshipId);
@@ -31,7 +38,8 @@ public class FriendShipService {
 
     }
 
-    public List<User> getFriends(User user) {
-        return friendShipRep.findFriendsByUserId(user.getId());
+    public List<UserDto> getFriends(UserDto user) {
+        List<User> friends = friendShipRep.findFriendsByUserId(user.getId());
+        return userMapper.toUserDtos(friends);
     }
 }

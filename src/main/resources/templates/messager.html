@@ -7,24 +7,68 @@
     <title>Chat</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-    <!-- Подключаем внешний JS файл -->
-    <script src="wow.js" defer></script> <!-- Замените на путь, где находится ваш chat.js -->
 </head>
 <body>
 <h2>Chat</h2>
 <link rel="stylesheet" href="wow.css">
 
 
-<input type="hidden" id="currentUser" th:value="${JSONcurrentUser}"/>
-<input type="hidden" id="receiver" th:value="${JSONreceiver}"/>
 
 
 <div id="chat"></div>
 <div>
     <input type="text" id="message" placeholder="Enter your message"/>
     <button onclick="sendMessage()">Send</button>
-
 </div>
+<script th:inline="javascript">
 
+    var socket = new SockJS('/chat');
+    var stompClient = Stomp.over(socket);
+    var currentUser = [[${currentUserDTO}]];
+    var receiver = [[${friendDTO}]];
+    var currentUserId = currentUser.id;
+    var receiverId = receiver.id;
+    var chatId = generateChatId(currentUserId, receiverId);
+
+
+    stompClient.connect({}, function(frame) {
+        console.log('Connected: ' + frame);
+
+
+        stompClient.subscribe('/user/' + chatId + '/queue/reply', function(messageOutput) {
+            var message = JSON.parse(messageOutput.body);
+            var chatDiv = document.getElementById("chat");
+            var newMessage = document.createElement("div");
+
+            if (message.sender.id === currentUserId) {
+                newMessage.classList.add("sender-message");
+            } else {
+                newMessage.classList.add("receiver-message");
+            }
+            newMessage.innerHTML = "<strong>" + message.sender.nickname + ": </strong>" + message.content;
+            chatDiv.appendChild(newMessage);
+        });
+    });
+
+
+
+    function sendMessage() {
+        var messageContent = document.getElementById("message").value;
+        var message = {
+            sender: currentUser,
+            receiver: receiver,
+            content: messageContent
+        };
+
+
+        stompClient.send("/app/sendMessage/" + chatId, {}, JSON.stringify(message));
+
+
+        document.getElementById("message").value = '';
+    }
+    function generateChatId(senderId, receiverId) {
+        return senderId < receiverId ? senderId + "_" + receiverId : receiverId + "_" + senderId;
+    }
+</script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.testpractice.socialnetwork.controllers;
 
+import com.testpractice.socialnetwork.dtos.UserDto;
 import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.services.UserDTOService;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,17 +17,18 @@ import java.util.List;
 @SessionAttributes({"currentUser", "friends"})
 public class SeacrhController {
 
+
     @Autowired
-    UserService userService;
+    private UserDTOService userDTOService;
 
     @GetMapping()
     public String search(@RequestParam String name,
-                         @ModelAttribute(name = "currentUser") User user,
-                         @ModelAttribute(name = "friends") List<User> friends,
+                         @ModelAttribute(name = "currentUser") UserDto user,
+                         @ModelAttribute(name = "friends") List<UserDto> friends,
                          Model model) {
-        List<User> users = new ArrayList<>(friends);
+        List<UserDto> users = new ArrayList<>(friends);
         users.add(user);
-        List<User> searchResults = userService.findAllByNameExceptMeandFriends(name, users);
+        List<UserDto> searchResults = userDTOService.findAllByNameExceptMeandFriends(name, users);
         model.addAttribute("searchResults", searchResults);
         return "home";
     }

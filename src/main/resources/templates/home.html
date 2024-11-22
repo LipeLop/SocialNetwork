@@ -57,24 +57,39 @@
         stompClient.subscribe('/user/' + currentUserId + '/queue/notifications', function(notification) {
             var notificationMessage =  JSON.parse(notification.body);
             displayNotification(notificationMessage);
+            playNotificationSound();
         });
     });
 
-    // Функция для отображения уведомлений
+
     function displayNotification(notification) {
-        // Создаем элемент уведомления
         var notificationDiv = document.createElement("div");
         notificationDiv.classList.add("notification");
-        var message = `<strong>${notification.sender}</strong>: ${notification.message}`;
-        notificationDiv.innerHTML = message;
 
-        // Добавляем уведомление на страницу
+
+
+        var senderDiv = document.createElement("div");
+        senderDiv.classList.add("sender");
+        senderDiv.innerHTML = notification.sender;
+
+
+        var messageDiv = document.createElement("div");
+        messageDiv.classList.add("message");
+        messageDiv.innerHTML = notification.message;
+
+        notificationDiv.appendChild(senderDiv);
+        notificationDiv.appendChild(messageDiv);
+
         document.body.appendChild(notificationDiv);
 
         // Удаляем уведомление через 5 секунд
         setTimeout(function() {
             notificationDiv.remove();
         }, 5000);
+    }
+    function playNotificationSound() {
+        var audio = new Audio('newMessageSound.mp3'); // Путь к аудиофайлу
+        audio.play();
     }
 
 </script>

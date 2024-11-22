@@ -55,16 +55,17 @@
 
         // Подписка на уведомления для текущего пользователя
         stompClient.subscribe('/user/' + currentUserId + '/queue/notifications', function(notification) {
-            var notificationMessage = notification.body;
+            var notificationMessage =  JSON.parse(notification.body);
             displayNotification(notificationMessage);
         });
     });
 
     // Функция для отображения уведомлений
-    function displayNotification(message) {
+    function displayNotification(notification) {
         // Создаем элемент уведомления
         var notificationDiv = document.createElement("div");
         notificationDiv.classList.add("notification");
+        var message = `<strong>${notification.sender}</strong>: ${notification.message}`;
         notificationDiv.innerHTML = message;
 
         // Добавляем уведомление на страницу
@@ -90,6 +91,21 @@
         border-radius: 5px;
         font-size: 16px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: auto; /* Задаем фиксированную ширину */
+        word-wrap: break-word; /* Обеспечивает перенос текста на несколько строк */
+    }
+
+    /* Стиль для имени отправителя */
+    .notification .sender {
+        font-weight: bold; /* Жирный шрифт для имени отправителя */
+        color: #fff; /* Белый цвет для имени */
+        display: block; /* Делаем отправителя отдельным элементом */
+        margin-bottom: 5px; /* Отступ между отправителем и сообщением */
+    }
+
+    /* Стиль для текста сообщения */
+    .notification .message {
+        color: #f0f0f0; /* Немного светлее для текста сообщения */
     }
 </style>
 </body>

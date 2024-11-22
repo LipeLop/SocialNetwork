@@ -3,6 +3,7 @@ package com.testpractice.socialnetwork.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.testpractice.socialnetwork.dtos.NewMessageNotifification;
 import com.testpractice.socialnetwork.dtos.UserDto;
 import com.testpractice.socialnetwork.entities.Message;
 import com.testpractice.socialnetwork.entities.User;
@@ -39,8 +40,8 @@ public class ChatController {
     @MessageMapping("/sendMessage/{chatId}")
     public void sendMessage(@DestinationVariable String chatId, @Payload Message message) {
         messagingTemplate.convertAndSend("/user/" + chatId + "/queue/reply", message);
-        String notificationMessage = message.getSender().getNickname();
-        messagingTemplate.convertAndSend("/user/" + message.getReceiver().getId() + "/queue/notifications", notificationMessage);
+        NewMessageNotifification newMessageNotif = new NewMessageNotifification(message.getSender().getNickname(), message.getContent());
+        messagingTemplate.convertAndSend("/user/" + message.getReceiver().getId() + "/queue/notifications", newMessageNotif);
 
     }
 

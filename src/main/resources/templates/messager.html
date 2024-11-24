@@ -27,8 +27,7 @@
     var currentUser = [[${currentUserDTO}]];
     var receiver = [[${friendDTO}]];
     var currentUserId = currentUser.id;
-    var receiverId = receiver.id;
-    var chatId = generateChatId(currentUserId, receiverId);
+    var chatId = [[${chatRoom}]];
 
 
     stompClient.connect({}, function(frame) {
@@ -56,19 +55,17 @@
         var messageContent = document.getElementById("message").value;
         var message = {
             sender: currentUser,
-            receiver: receiver,
+            chatid: chatId,
             content: messageContent
         };
 
 
-        stompClient.send("/app/sendMessage/" + chatId, {}, JSON.stringify(message));
+        stompClient.send("/app/sendMessage" , {}, JSON.stringify(message));
 
 
         document.getElementById("message").value = '';
     }
-    function generateChatId(senderId, receiverId) {
-        return senderId < receiverId ? senderId + "_" + receiverId : receiverId + "_" + senderId;
-    }
+
 </script>
 </body>
 </html>

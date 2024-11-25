@@ -6,7 +6,6 @@ import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +19,7 @@ public class UserMapper {
     public UserDto toUserDto(User user) {
         return new UserDto(user.getId(), user.getNickname());
     }
+
     public List<UserDto> toUserDtos(List<User> users) {
         return users.stream().map(this::toUserDto).collect(Collectors.toList());
     }

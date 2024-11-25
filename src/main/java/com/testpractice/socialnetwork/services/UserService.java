@@ -5,6 +5,7 @@ import com.testpractice.socialnetwork.entities.User;
 import com.testpractice.socialnetwork.exceptions.UserIsAlreadyExist;
 import com.testpractice.socialnetwork.reps.UserRep;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class UserService {
     public User findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
-
+    @Cacheable(value = "users", key = "#id")
     public User findById(int id) {
         return userRepository.findById(id);
     }

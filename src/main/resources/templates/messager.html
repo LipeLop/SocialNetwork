@@ -13,29 +13,31 @@
 <link rel="stylesheet" href="wow.css">
 
 
+<div id="chat">
+    <div th:each="message : ${messagesOfChat}"
+         th:class="${message.sender.id == currentUserDTO.id ? 'sender-message' : 'receiver-message'}">
+        <strong th:text="${message.sender.nickname}"></strong>:
+        <span th:text="${message.content}"></span>
+    </div>
+</div>
 
-
-<div id="chat"></div>
 <div>
     <input type="text" id="message" placeholder="Enter your message"/>
     <button onclick="sendMessage()">Send</button>
 </div>
-<script th:inline="javascript">
 
+<script th:inline="javascript">
     var socket = new SockJS('/chat');
     var stompClient = Stomp.over(socket);
     var currentUser = [[${currentUserDTO}]];
     var receiver = [[${friendDTO}]];
     var currentUserId = currentUser.id;
-    var receiverId = receiver.id;
-    var chatId = generateChatId(currentUserId, receiverId);
+    var chatId = [[${chatRoom}]];
 
-
-    stompClient.connect({}, function(frame) {
+    stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
 
-
-        stompClient.subscribe('/user/' + chatId + '/queue/reply', function(messageOutput) {
+        stompClient.subscribe('/user/' + chatId + '/queue/reply', function (messageOutput) {
             var message = JSON.parse(messageOutput.body);
             var chatDiv = document.getElementById("chat");
             var newMessage = document.createElement("div");
@@ -50,25 +52,17 @@
         });
     });
 
-
-
     function sendMessage() {
         var messageContent = document.getElementById("message").value;
         var message = {
             sender: currentUser,
-            receiver: receiver,
+            chatid: chatId,
             content: messageContent
         };
 
-
-        stompClient.send("/app/sendMessage/" + chatId, {}, JSON.stringify(message));
-
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
 
         document.getElementById("message").value = '';
     }
-    function generateChatId(senderId, receiverId) {
-        return senderId < receiverId ? senderId + "_" + receiverId : receiverId + "_" + senderId;
-    }
 </script>
 </body>
-</html>

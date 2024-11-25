@@ -1,9 +1,7 @@
 package com.testpractice.socialnetwork.controllers;
 
 import com.testpractice.socialnetwork.dtos.UserDto;
-import com.testpractice.socialnetwork.entities.User;
 import com.testpractice.socialnetwork.services.UserDTOService;
-import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -19,6 +19,7 @@ public class UserMapper {
     public UserDto toUserDto(User user) {
         return new UserDto(user.getId(), user.getNickname());
     }
+
     public List<UserDto> toUserDtos(List<User> users) {
         return users.stream().map(this::toUserDto).collect(Collectors.toList());
     }

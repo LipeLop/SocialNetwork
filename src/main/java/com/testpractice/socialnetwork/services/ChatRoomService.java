@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -39,6 +40,9 @@ public class ChatRoomService {
         chatRoom.setChatId(chatId);
         chatRoomRep.save(chatRoom);
 
+    }
+    public String generateRandomChatId() {
+        return UUID.randomUUID().toString();
     }
 }
 

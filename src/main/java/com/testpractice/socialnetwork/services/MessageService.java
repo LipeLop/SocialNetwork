@@ -26,10 +26,11 @@ public class MessageService {
     public void saveMessage(Message message) {
         messageRepository.save(message);
     }
-    public int saveMessageWithReturnId(MessageDTO messageDTO) {
+    public MessageDTO saveMessageWithReturnId(MessageDTO messageDTO) {
         Message message1 = messageMapper.toMessage(messageDTO);
         messageRepository.save(message1);
-        return message1.getId();
+        messageDTO.setId(message1.getId());
+        return messageDTO;
     }
     public List<MessageDTO> getMessagesByChatId(String chatId) {
         List<Message> messages = messageRepository.findByChatId(chatId);

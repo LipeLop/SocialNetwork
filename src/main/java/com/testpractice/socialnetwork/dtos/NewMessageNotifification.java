@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 public class NewMessageNotifification implements Serializable {
-
+    private final int sender_id;
     private final String sender;
     private final String message;
 }

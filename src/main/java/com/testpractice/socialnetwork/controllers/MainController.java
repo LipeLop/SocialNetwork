@@ -54,6 +54,7 @@ public class MainController {
     public String showMainPage() {
         return "home";
     }
+
     @PostMapping("/addFriend")
     public String addFriend(@RequestParam Integer userId,
                             @ModelAttribute(name = "currentUser") UserDto user,
@@ -63,7 +64,7 @@ public class MainController {
         searchResults.remove(friend);
         friendShipService.addFriends(user, friend);
         friends.add(friend);
-        return "home";
+        return "redirect:/home";
     }
 
 }

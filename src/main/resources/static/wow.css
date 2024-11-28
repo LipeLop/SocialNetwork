@@ -1,10 +1,10 @@
 /* Общие стили для блока чата */
 #chat {
+    width: 100%;
+    height: 400px; /* Установите желаемую высоту */
+    overflow-y: scroll; /* Включаем прокрутку по вертикали */
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    max-height: 500px;
-    overflow-y: auto;
+    flex-direction: column; /* Сообщения идут сверху вниз */
     padding: 10px;
     border: 1px solid #ccc;
 }

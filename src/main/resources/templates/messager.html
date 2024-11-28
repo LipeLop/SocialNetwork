@@ -49,7 +49,9 @@
             }
             newMessage.innerHTML = "<strong>" + message.sender.nickname + ": </strong>" + message.content;
             chatDiv.appendChild(newMessage);
+            scrollToBottom();
         });
+        scrollToBottom();
     });
 
     function sendMessage() {
@@ -63,6 +65,10 @@
         stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
 
         document.getElementById("message").value = '';
+    }
+    function scrollToBottom() {
+        var chatDiv = document.getElementById("chat");
+        chatDiv.scrollTop = chatDiv.scrollHeight;
     }
 </script>
 </body>

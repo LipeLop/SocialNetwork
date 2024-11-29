@@ -1,7 +1,7 @@
 package com.testpractice.socialnetwork.services;
 
 import com.testpractice.socialnetwork.dtos.MessageDTO;
-import com.testpractice.socialnetwork.entities.Message;
+import com.testpractice.socialnetwork.entities.mysql.Message;
 import com.testpractice.socialnetwork.mappers.MessageMapper;
 import com.testpractice.socialnetwork.reps.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +26,11 @@ public class MessageService {
     public void saveMessage(Message message) {
         messageRepository.save(message);
     }
-    public int saveMessageWithReturnId(MessageDTO messageDTO) {
+    public MessageDTO saveMessageWithReturnId(MessageDTO messageDTO) {
         Message message1 = messageMapper.toMessage(messageDTO);
         messageRepository.save(message1);
-        return message1.getId();
+        messageDTO.setId(message1.getId());
+        return messageDTO;
     }
     public List<MessageDTO> getMessagesByChatId(String chatId) {
         List<Message> messages = messageRepository.findByChatId(chatId);

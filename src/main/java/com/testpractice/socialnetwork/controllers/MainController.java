@@ -1,7 +1,7 @@
 package com.testpractice.socialnetwork.controllers;
 
 import com.testpractice.socialnetwork.dtos.UserDto;
-import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.mysql.User;
 import com.testpractice.socialnetwork.mappers.UserMapper;
 import com.testpractice.socialnetwork.services.FriendShipService;
 import com.testpractice.socialnetwork.services.UserDTOService;
@@ -54,6 +54,7 @@ public class MainController {
     public String showMainPage() {
         return "home";
     }
+
     @PostMapping("/addFriend")
     public String addFriend(@RequestParam Integer userId,
                             @ModelAttribute(name = "currentUser") UserDto user,
@@ -63,7 +64,7 @@ public class MainController {
         searchResults.remove(friend);
         friendShipService.addFriends(user, friend);
         friends.add(friend);
-        return "home";
+        return "redirect:/home";
     }
 
 }

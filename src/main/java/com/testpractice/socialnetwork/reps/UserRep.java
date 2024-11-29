@@ -1,6 +1,6 @@
 package com.testpractice.socialnetwork.reps;
 
-import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.mysql.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

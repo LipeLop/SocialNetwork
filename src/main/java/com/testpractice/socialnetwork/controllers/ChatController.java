@@ -3,7 +3,7 @@ package com.testpractice.socialnetwork.controllers;
 
 import com.testpractice.socialnetwork.dtos.NewMessageNotifification;
 import com.testpractice.socialnetwork.dtos.UserDto;
-import com.testpractice.socialnetwork.entities.ChatRoom;
+import com.testpractice.socialnetwork.entities.mongo.ChatRoom;
 import com.testpractice.socialnetwork.dtos.MessageDTO;
 import com.testpractice.socialnetwork.services.ChatRoomService;
 import com.testpractice.socialnetwork.services.MessageService;
@@ -42,18 +42,20 @@ public class ChatController {
 
     @MessageMapping("/sendMessage")
     public void sendMessage(@Payload MessageDTO message) {
-        int id = messageService.saveMessageWithReturnId(message);
-        message.setId(id);
+        message = messageService.saveMessageWithReturnId(message);
         messagingTemplate.convertAndSend("/user/" + message.getChatid() + "/queue/reply", message);
-        NewMessageNotifification newMessageNotif = new NewMessageNotifification(message.getSender().getNickname(), message.getContent());
+        NewMessageNotifification newMessageNotif = new NewMessageNotifification(message.getSender().getId(), message.getSender().getNickname(), message.getContent());
         sendNotificationToChatMembers(message.getChatid(), newMessageNotif);
 
     }
+
     public void sendNotificationToChatMembers(String chatroomId, NewMessageNotifification nof) {
         ChatRoom chats = chatRoomService.findChatsByChatRoomId(chatroomId);
-        List<String> ids = chats.getMemberIds();
-        for (String id : ids) {
-            messagingTemplate.convertAndSend("/user/" + id + "/queue/notifications", nof);
+        List<Integer> ids = chats.getMemberIds();
+        for (int id : ids) {
+            if (id != nof.getSender_id()) {
+                messagingTemplate.convertAndSend("/user/" + id + "/queue/notifications", nof);
+            }
         }
 
     }
@@ -66,9 +68,12 @@ public class ChatController {
         UserDto friendDTO = new UserDto(friendId, friendNickname);
         List<ChatRoom> chatRooms = chatRoomService.anotherWayGetChatsWithExactMembers(List.of(currentUserDTO, friendDTO));
         if (chatRooms.isEmpty()) {
-            String newChatId = chatRoomService.generateRandomChatId();
+            List<Integer> memberIds = List.of(currentUserDTO.getId(), friendDTO.getId());
+            ChatRoom newChatRoom = new ChatRoom();
+            newChatRoom.setMemberIds(memberIds);
+            ChatRoom savedChatRoom = chatRoomService.saveChatRoom(newChatRoom);
+            String newChatId = savedChatRoom.getChatId();
             model.addAttribute("chatRoom", newChatId);
-            chatRoomService.saveChatRoom(newChatId, currentUserDTO, friendDTO);
         } else {
             ChatRoom chatRoom = chatRooms.get(0);
             model.addAttribute("chatRoom", chatRoom.getChatId());

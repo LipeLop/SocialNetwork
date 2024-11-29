@@ -1,12 +1,8 @@
 package com.testpractice.socialnetwork;
 
-import com.testpractice.socialnetwork.entities.Friendship;
-import com.testpractice.socialnetwork.entities.FriendshipId;
-import com.testpractice.socialnetwork.entities.User;
 import com.testpractice.socialnetwork.reps.FriendShipRep;
 import com.testpractice.socialnetwork.reps.UserRep;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

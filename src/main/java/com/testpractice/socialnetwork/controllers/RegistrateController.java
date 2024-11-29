@@ -1,6 +1,6 @@
 package com.testpractice.socialnetwork.controllers;
 
-import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.mysql.User;
 import com.testpractice.socialnetwork.exceptions.UserIsAlreadyExist;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

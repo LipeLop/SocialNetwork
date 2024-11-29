@@ -3,7 +3,7 @@ package com.testpractice.socialnetwork.controllers;
 
 import com.testpractice.socialnetwork.dtos.NewMessageNotifification;
 import com.testpractice.socialnetwork.dtos.UserDto;
-import com.testpractice.socialnetwork.entities.ChatRoom;
+import com.testpractice.socialnetwork.entities.mongo.ChatRoom;
 import com.testpractice.socialnetwork.dtos.MessageDTO;
 import com.testpractice.socialnetwork.services.ChatRoomService;
 import com.testpractice.socialnetwork.services.MessageService;

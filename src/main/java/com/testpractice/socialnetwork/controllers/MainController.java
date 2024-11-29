@@ -1,7 +1,7 @@
 package com.testpractice.socialnetwork.controllers;
 
 import com.testpractice.socialnetwork.dtos.UserDto;
-import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.mysql.User;
 import com.testpractice.socialnetwork.mappers.UserMapper;
 import com.testpractice.socialnetwork.services.FriendShipService;
 import com.testpractice.socialnetwork.services.UserDTOService;

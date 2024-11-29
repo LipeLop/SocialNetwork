@@ -1,7 +1,7 @@
 package com.testpractice.socialnetwork.configs;
 
 
-import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.mysql.User;
 import com.testpractice.socialnetwork.reps.UserRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

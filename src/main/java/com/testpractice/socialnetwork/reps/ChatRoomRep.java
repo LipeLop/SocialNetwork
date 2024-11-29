@@ -1,8 +1,7 @@
 package com.testpractice.socialnetwork.reps;
 
-import com.testpractice.socialnetwork.entities.ChatRoom;
+import com.testpractice.socialnetwork.entities.mongo.ChatRoom;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 

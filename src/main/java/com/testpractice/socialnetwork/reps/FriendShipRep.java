@@ -1,8 +1,8 @@
 package com.testpractice.socialnetwork.reps;
 
-import com.testpractice.socialnetwork.entities.Friendship;
-import com.testpractice.socialnetwork.entities.FriendshipId;
-import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.mysql.Friendship;
+import com.testpractice.socialnetwork.entities.mysql.FriendshipId;
+import com.testpractice.socialnetwork.entities.mysql.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

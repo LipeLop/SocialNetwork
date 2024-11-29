@@ -1,7 +1,7 @@
 package com.testpractice.socialnetwork.services;
 
 import com.testpractice.socialnetwork.dtos.MessageDTO;
-import com.testpractice.socialnetwork.entities.Message;
+import com.testpractice.socialnetwork.entities.mysql.Message;
 import com.testpractice.socialnetwork.mappers.MessageMapper;
 import com.testpractice.socialnetwork.reps.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;

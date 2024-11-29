@@ -1,7 +1,7 @@
 package com.testpractice.socialnetwork.mappers;
 
 import com.testpractice.socialnetwork.dtos.UserDto;
-import com.testpractice.socialnetwork.entities.User;
+import com.testpractice.socialnetwork.entities.mysql.User;
 import com.testpractice.socialnetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

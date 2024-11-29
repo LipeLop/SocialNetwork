@@ -1,7 +1,7 @@
 package com.testpractice.socialnetwork.services;
 
 import com.testpractice.socialnetwork.dtos.UserDto;
-import com.testpractice.socialnetwork.entities.ChatRoom;
+import com.testpractice.socialnetwork.entities.mongo.ChatRoom;
 import com.testpractice.socialnetwork.reps.ChatRoomRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

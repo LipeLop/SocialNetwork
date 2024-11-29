@@ -1,6 +1,6 @@
 package com.testpractice.socialnetwork.reps;
 
-import com.testpractice.socialnetwork.entities.Message;
+import com.testpractice.socialnetwork.entities.mysql.Message;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;

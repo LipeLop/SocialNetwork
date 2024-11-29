@@ -1,4 +1,4 @@
-package com.testpractice.socialnetwork.entities;
+package com.testpractice.socialnetwork.entities.mysql;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
